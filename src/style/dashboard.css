@@ -1,0 +1,90 @@
+.pt-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: #f5f7fb;
+  min-height: 100vh;
+  padding: 40px 16px;
+  font-family: "Sarabun", sans-serif; /* ฟอนต์ไทยสวยและอ่านง่าย */
+  font-size: 15px; /* ✅ ฟอนต์ขนาดเดียวกันทุกที่ */
+  font-weight: 400; /* ✅ ความหนาเท่ากันทุกช่อง */
+}
+
+.pt-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 36px;
+  width: 100%;
+  max-width: 640px;
+  box-sizing: border-box;
+}
+
+.pt-title {
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+/* layout */
+.pt-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.pt-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.pt-label {
+  flex: 0 0 140px;
+  font-weight: 500;
+  color: #111;
+}
+.pt-inputCell {
+  flex: 1;
+}
+
+/* ช่องข้อมูลทั่วไป */
+.pt-input,
+.pt-textarea {
+  width: 100%;
+  border: 1px solid #d2d6dc;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #f9fafb;
+  color: #111;
+  font-size: 15px;
+  font-weight: 400;
+  box-sizing: border-box;
+}
+
+.pt-input.readonly,
+.pt-textarea.readonly {
+  background: #f9fafb;
+  color: #111;
+  cursor: default;
+}
+
+/* เพศ (text display) */
+.pt-text-display {
+  border: 1px solid #d2d6dc;
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: #f9fafb;
+  color: #111;
+  font-size: 15px;
+  font-weight: 400; /* ✅ เท่ากับช่องอื่น */
+}
+
+/* ข้อความแจ้งเตือน */
+.pt-alert {
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  padding: 10px;
+  color: #b91c1c;
+  text-align: center;
+}
