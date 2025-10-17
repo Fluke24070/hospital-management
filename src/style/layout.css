@@ -23,10 +23,10 @@
   padding:10px 16px;
   display:flex;
   align-items:center;
-  justify-content:space-between; /* ⬅️ ทำให้มีพื้นที่ซ้าย-ขวา */
+  justify-content:space-between; 
 }
 
-/* กลุ่มซ้าย (โลโก้ + เมนู) ยังคงชิดซ้าย */
+
 .header-left{
   display:flex;
   align-items:center;

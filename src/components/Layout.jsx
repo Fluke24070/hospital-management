@@ -40,9 +40,6 @@ export default function Layout() {
             <button
               className="home-link"
               onClick={() => {
-                // ถ้าอยาก "ออกจากระบบจริงๆ" ให้ปลดคอมเมนต์ 2 บรรทัดล่างนี้
-                // localStorage.removeItem("currentUser");
-                // localStorage.removeItem("hms_session");
                 navigate("/login");
               }}
               title="กลับหน้าเข้าสู่ระบบ"

@@ -19,16 +19,15 @@ export default function Login() {
     );
 
     if (foundUser) {
-      // ✅ เก็บผู้ใช้ปัจจุบันไว้ใน localStorage
+      
       localStorage.setItem(
         "currentUser",
         JSON.stringify({ citizenId: foundUser.citizenId })
       );
 
-      // ✅ ไปหน้าประวัติผู้ป่วย
       navigate("/PatientInfo", { replace: true });
     } else {
-      // ❌ ไม่มีสมาชิก
+      
       setMessage("ไม่พบสมาชิก โปรดสมัครสมาชิกก่อนเข้าสู่ระบบ");
     }
   };
