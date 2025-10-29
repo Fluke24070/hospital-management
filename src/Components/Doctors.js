@@ -11,42 +11,39 @@ function Doctors() {
     <div className="doctor-section" id="doctors">
       <div className="dt-title-content">
         <h3 className="dt-title">
-          <span>Meet Our Doctors</span>
+          <span>แพทย์ผู้เชียวชาญ</span>
         </h3>
 
         <p className="dt-description">
-          Meet our exceptional team of specialist doctors, dedicated to
-          providing top-notch healthcare services at Health Plus. Trust in their
-          knowledge and experience to lead you towards a healthier and happier
-          life.
+          ทีมงานแพทย์ผู้เชียวชาญของเรา พร้อมให้คำปรึกษา
         </p>
       </div>
 
       <div className="dt-cards-content">
         <DoctorCard
           img={profile1}
-          name="Dr. Kathryn Murphy"
+          name="นาย แพทย์ 1"
           title="General Surgeons"
           stars="4.9"
           reviews="1800"
         />
         <DoctorCard
           img={profile2}
-          name="Dr. Jacob Jones"
+          name="นาย แพทย์ 1"
           title="Hematologists"
           stars="4.8"
           reviews="700"
         />
         <DoctorCard
           img={profile3}
-          name="Dr. Jenny Wilson"
+          name="นาย แพทย์ 1"
           title="Endocrinologists"
           stars="4.7"
           reviews="450"
         />
         <DoctorCard
           img={profile4}
-          name="Dr. Albert Flores"
+          name="นาย แพทย์ 1"
           title="Hematologists"
           stars="4.8"
           reviews="500"
