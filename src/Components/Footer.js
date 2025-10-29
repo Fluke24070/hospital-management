@@ -10,12 +10,12 @@ function Footer() {
         <div className="ft-info">
           <div className="ft-info-p1">
             <p className="ft-title">
-              Health <span className="ft-sign">+</span>
+              KU Hospital Management <span className="ft-sign">+</span>
             </p>
             <p className="ft-description">
-              Talk to online doctors and get medical advice, online
-              prescriptions, refills and medical notes within minutes. On-demand
-              healthcare services at your fingertips.
+              ปรึกษาแพทย์ออนไลน์และรับคำแนะนำทางการแพทย์ ใบสั่งยา 
+              การต่ออายุยา และเอกสารทางการแพทย์ได้ภายในไม่กี่นาที
+              บริการดูแลสุขภาพตามความต้องการ อยู่ใกล้คุณเพียงปลายนิ้วสัมผัส
             </p>
           </div>
 

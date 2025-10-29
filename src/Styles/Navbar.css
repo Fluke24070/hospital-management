@@ -11,28 +11,28 @@
   }
   
 
-  .navbar-container {
+.navbar-container {
     max-width: 1200px;
-    margin: 0 auto;
-    padding: 16px 20px;
+    margin: 0 auto;          /* จัด navbar ให้อยู่กลางหน้า */
+    padding: 16px 20px;      /* ระยะด้านบน/ล่าง 16px ด้านซ้าย/ขวา 20px */
     display: flex;
     align-items: center;
-    justify-content: space-between;
-  }
-  
+    justify-content: space-between; /* โลโก้ซ้าย ไอเท็มอื่นชิดขวา */
+}
   
   .navbar-logo {
     font-size: 1.4rem;
-    font-weight: 600;
-    color: #000;
+    font-weight: 1000;
+    color: #17b417;
     text-decoration: none;
-    display: flex;
+    display: le;
     align-items: baseline;
     gap: 4px;
+    padding-left: 1px;
   }
   
   .logo-plus {
-    color: #10b981; 
+    color: #012e24; 
     font-weight: 600;
   }
   

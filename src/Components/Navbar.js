@@ -115,7 +115,7 @@ export default function Navbar() {
         {}
         <div className="navbar-left">
           <Link to="/" className="navbar-logo">
-            Clinic <span className="logo-plus">+</span>
+           KU Hospital Management <span className="logo-plus">+</span>
           </Link>
         </div>
 

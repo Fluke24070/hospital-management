@@ -23,26 +23,22 @@ function BookAppointment() {
 
       <div className="ba-text-content">
         <h3 className="ba-title">
-          <span>Why Choose Health</span>
+          <span>ทำไมถึงต้องเลือกรักษากับเรา</span>
         </h3>
         <p className="ba-description">
-          Discover the reasons to choose Health Plus for your healthcare needs.
-          Experience expert care, convenience, and personalized solutions,
-          making your well-being our top priority. Join us on a journey to
-          better health and a happier life.
+         ค้นพบเหตุผลที่ควรเลือก KU Hospital Management เพื่อการดูแลสุขภาพของคุณ
+        สัมผัสการดูแลจากผู้เชี่ยวชาญ ความสะดวกสบาย และแนวทางการรักษาที่ปรับให้เหมาะกับคุณ
+        ให้ความเป็นอยู่ที่ดีของคุณเป็นสิ่งสำคัญที่สุด ร่วมกับเราเพื่อการดูแลสุขภาพที่ดีกว่าและชีวิตที่มีความสุขมากขึ้น
         </p>
 
         <p className="ba-checks ba-check-first">
-          <FontAwesomeIcon icon={faCircleCheck} style={{ color: "#1E8FFD" }} /> Best Professional Doctors
+          <FontAwesomeIcon icon={faCircleCheck} style={{ color: "#1E8FFD" }} /> เรามีแพทย์ผู้เชียวชาญ
         </p>
         <p className="ba-checks">
-          <FontAwesomeIcon icon={faCircleCheck} style={{ color: "#1E8FFD" }} /> Emergency Care
-        </p>
-        <p className="ba-checks">
-          <FontAwesomeIcon icon={faCircleCheck} style={{ color: "#1E8FFD" }} /> 24/7 Support Live Chat
+          <FontAwesomeIcon icon={faCircleCheck} style={{ color: "#1E8FFD" }} /> ปรึกษาฟรี
         </p>
         <p className="ba-checks ba-check-last">
-          <FontAwesomeIcon icon={faCircleCheck} style={{ color: "#1E8FFD" }} /> Enrollment Easy and Quick
+          <FontAwesomeIcon icon={faCircleCheck} style={{ color: "#1E8FFD" }} /> ง่ายและสดวก
         </p>
 
         <button
@@ -50,7 +46,7 @@ function BookAppointment() {
           type="button"
           onClick={handleBookAppointmentClick}
         >
-          <FontAwesomeIcon icon={faCalendarCheck} /> Book Appointment
+          <FontAwesomeIcon icon={faCalendarCheck} /> นัดหมาย
         </button>
       </div>
     </div>
