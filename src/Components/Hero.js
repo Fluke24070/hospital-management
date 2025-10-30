@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Doctor from "../Assets/doctor-picture.png";
+import Doctor from "../Assets/doctorprofile_hero1.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarCheck, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate  } from "react-router-dom";
@@ -36,36 +36,37 @@ function Hero() {
     <div className="section-container">
       <div className="hero-section">
         <div className="text-section">
-          <p className="text-headline">❤️ Health comes first</p>
+          <p className="text-headline">❤️ สุขภาพมาก่อน</p>
           <h2 className="text-title">
-            Find your Doctor and make an Appointments
+            ค้นหาแพทย์ของคุณ และ นัดหมาย
           </h2>
           <p className="text-descritpion">
-            Talk to online doctors and get medical advice, online prescriptions,
-            refills and medical notes within minutes. On-demand healthcare
-            services at your fingertips.
+            พูดคุยกับแพทย์ออนไลน์และรับคำแนะนำทางการแพทย์
+            ใบสั่งยาออนไลน์ การต่ออายุยา และใบรับรองแพทย์ได้ภายในไม่กี่นาที
+            บริการดูแลสุขภาพตามความต้องการ อยู่แค่ปลายนิ้วของคุณ
           </p>
           <button
             className="text-appointment-btn"
             type="button"
             onClick={handleBookAppointmentClick}
           >
-            <FontAwesomeIcon icon={faCalendarCheck} /> Book Appointment
+            <FontAwesomeIcon icon={faCalendarCheck} /> นัดหมายเลย
           </button>
+
           <div className="text-stats">
             <div className="text-stats-container">
-              <p>145k+</p>
-              <p>Receive Patients</p>
+              <p></p>
+              <p></p>
             </div>
 
             <div className="text-stats-container">
-              <p>50+</p>
-              <p>Expert Doctors</p>
+              <p></p>
+              <p></p>
             </div>
 
             <div className="text-stats-container">
-              <p>10+</p>
-              <p>Years of Experience</p>
+              <p></p>
+              <p></p>
             </div>
           </div>
         </div>

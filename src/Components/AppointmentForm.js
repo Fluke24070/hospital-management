@@ -73,18 +73,18 @@ function AppointmentForm() {
     <div className="appointment-form-section">
       <h1 className="legal-siteTitle">
         <Link to="/">
-          Health <span className="legal-siteSign">+</span>
+          KU Hospital Management <span className="legal-siteSign"></span>
         </Link>
       </h1>
 
       <div className="form-container">
         <h2 className="form-title">
-          <span>Book Appointment Online</span>
+          <span>นัดหมายล่วงหน้าออนไลน์</span>
         </h2>
 
         <form className="form-content" onSubmit={handleSubmit}>
           <label>
-            Patient Full Name:
+            ชื่อผู้ป่วย :
             <input
               type="text"
               value={patientName}
@@ -96,7 +96,7 @@ function AppointmentForm() {
 
           <br />
           <label>
-            Patient Phone Number:
+            เบอร์ติดต่อ :
             <input
               type="text"
               value={patientNumber}
@@ -108,23 +108,23 @@ function AppointmentForm() {
 
           <br />
           <label>
-            Patient Gender:
+            เพศ :
             <select
               value={patientGender}
               onChange={(e) => setPatientGender(e.target.value)}
               required
             >
-              <option value="default">Select</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="private">I will inform Doctor only</option>
+              <option value="default">กรุณาเลือก</option>
+              <option value="male">ชาย</option>
+              <option value="female">หญิง</option>
+              <option value="private">ไม่ระบุ</option>
             </select>
             {formErrors.patientGender && <p className="error-message">{formErrors.patientGender}</p>}
           </label>
 
           <br />
           <label>
-            Preferred Appointment Time:
+            วันที่เวลาที่จะนัดหมาย :
             <input
               type="datetime-local"
               value={appointmentTime}
@@ -136,22 +136,22 @@ function AppointmentForm() {
 
           <br />
           <label>
-            Preferred Mode:
+            เลือกรูปแบบ :
             <select
               value={preferredMode}
               onChange={(e) => setPreferredMode(e.target.value)}
               required
             >
-              <option value="default">Select</option>
-              <option value="voice">Voice Call</option>
-              <option value="video">Video Call</option>
+              <option value="default">กรุณาเลือก</option>
+              <option value="voice">ออนไลน์</option>
+              <option value="video">ออนไซต์</option>
             </select>
             {formErrors.preferredMode && <p className="error-message">{formErrors.preferredMode}</p>}
           </label>
 
           <br />
           <button type="submit" className="text-appointment-btn">
-            Confirm Appointment
+            ยืนยันนัดหมาย
           </button>
 
           <p className="success-message" style={{display: isSubmitted ? "block" : "none"}}>Appointment details has been sent to the patients phone number via SMS.</p>
@@ -159,7 +159,7 @@ function AppointmentForm() {
       </div>
 
       <div className="legal-footer">
-        <p>© 2013-2023 Health+. All rights reserved.</p>
+        <p>© 2013-2023 KU Hospital Management. All rights reserved.</p>
       </div>
 
       <ToastContainer autoClose={5000} limit={1} closeButton={false} />

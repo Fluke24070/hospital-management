@@ -1,126 +1,141 @@
-.navbar-section {
-    padding: 0 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 80px;
-    background-color: white;
-}
-.navbar-title a {
-    color: #1A8EFD;
-    letter-spacing: .6px;
-    text-decoration: none;
-}
-.navbar-title {
-    font-family: 'Poppins', sans-serif;
-}
-.navbar-sign {
-    color: #54de54;
-    font-family: Cambria, sans-serif;
-    font-size: 40px;
-    font-weight: bold;
-}
-.navbar-items {
-    list-style-type: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 32px;
-    font-family: 'Rubik', sans-serif;
-}
-.navbar-items > li {
-    list-style-type: none;
-}
-.navbar-links {
-    text-decoration: none;
-    color: black;
-    font-size: 18px;
-    letter-spacing: .8px;
-}
-.navbar-links:hover {
-    color: #0cc2ea;
-}
-.navbar-btn {
-    padding: 14px 20px;
-    color: white;
-    border: 1px solid transparent;
-    border-radius: 28px;
-    outline: transparent;
-    background-color: #1A8EFD;
-    font-size: 18px;
-    font-family: 'Rubik', sans-serif;
-    letter-spacing: .8px;
-    cursor: pointer;
-    transition: all .4s ease;
-}
-.navbar-btn:hover {
-    color: #1A8EFD;
-    background-color: white;
-    border: 1px solid #1A8EFD;
-}
-/* Hamburger Icon */
-.mobile-nav {
-    display: none;
-}
-.hamb-icon {
-    width: 26px;
-    height: 26px;
-    cursor: pointer;
-}
-.hamb-icon:hover {
-    color: #0cc2ea;
-}
-/* Mobile Navbar */
-.mobile-navbar {
-    display: flex;
-    flex-direction: column;
+
+.navbar {
+    background-color: #fff;
+    border-bottom: 1px solid #e5e7eb;
     width: 100%;
-    height: 100vh;
-    position: fixed;
+    position: sticky;
     top: 0;
-    left: -100%;
-    background-color: white;
-    z-index: 20;
-    justify-content: center;
-    align-items: center;
-    transition: left .5s ease-in-out;
-}
-.mobile-navbar-close {
-    position: absolute;
-    top: 28px;
-    right: 28px;
-}
-.mobile-navbar-close .hamb-icon:hover {
-    color: rgb(255, 22, 22);
-}
-.open-nav {
-    left: 0;
-}
-.mobile-navbar-links {
-    list-style-type: none;
+    z-index: 100;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, "Helvetica Neue", Arial, "Noto Sans Thai", sans-serif;
+  }
+  
+
+.navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;          /* จัด navbar ให้อยู่กลางหน้า */
+    padding: 16px 20px;      /* ระยะด้านบน/ล่าง 16px ด้านซ้าย/ขวา 20px */
     display: flex;
-    flex-direction: column;
-    font-size: 24px;
-    gap: 24px;
-    text-align: center;
+    align-items: center;
+    justify-content: space-between; /* โลโก้ซ้าย ไอเท็มอื่นชิดขวา */
 }
-.mobile-navbar-links li a {
+  
+  .navbar-logo {
+    font-size: 1.4rem;
+    font-weight: 1000;
+    color: #17b417;
     text-decoration: none;
-    color: black;
-    font-family: 'Poppins', sans-serif;
-    font-weight: bold;
-    letter-spacing: .8px;
-    transition: color .3s ease-in-out;
-}
-.mobile-navbar-links li a:hover {
-    color: #0cc2ea;
-}
-/* Responsive */
-@media screen and (max-width: 900px) {
-    .navbar-btn, .navbar-items {
-        display: none;
-    }
-    .mobile-nav {
-        display: block;
-    }
-}
+    display: le;
+    align-items: baseline;
+    gap: 4px;
+    padding-left: 1px;
+  }
+  
+  .logo-plus {
+    color: #012e24; 
+    font-weight: 600;
+  }
+  
+  
+  .navbar-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .navbar-menu {
+    display: flex;
+    list-style: none;
+    gap: 24px;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navbar-link {
+    text-decoration: none;
+    color: #111827;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  
+  .navbar-link:hover {
+    color: #1f2937;
+    text-decoration: underline;
+  }
+  
+  
+  .navbar-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .login-button-outline {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #1e40af; 
+    background-color: #ffffff;
+    border: 2px solid #1e40af;
+    border-radius: 999px;
+    text-decoration: none;
+    line-height: 1;
+    transition: all 0.15s ease;
+  }
+  
+  .login-button-outline:hover {
+    background-color: #1e40af;
+    color: #ffffff;
+    box-shadow: 0 8px 20px rgba(30, 64, 175, 0.25);
+  }
+  
+  .login-icon {
+    font-size: 1rem;
+    line-height: 1;
+  }
+  .navbar-btnlike {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+  }
+  
+  .navbar-btnlike:focus {
+    outline: none;
+  }
+  
+  .navbar-loggedin {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  .user-label {
+    font-size: 0.9rem;
+    color: #1f2937;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  
+  .logout-button-outline {
+    background-color: #fff;
+    border: 2px solid #dc2626;
+    color: #dc2626;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    line-height: 1;
+    transition: 0.15s;
+  }
+  
+  .logout-button-outline:hover {
+    background-color: #dc2626;
+    color: #fff;
+  }
+  

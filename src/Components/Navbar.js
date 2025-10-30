@@ -1,128 +1,130 @@
-import React, { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCommentDots,
-  faBars,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import "../Styles/Navbar.css";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 
-function Navbar() {
-  const [nav, setNav] = useState(false);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+export default function Navbar() {
+  const [currentUser, setCurrentUser] = useState(null);
+  const location = useLocation();
 
-  const openNav = () => {
-    setNav(!nav);
-  };
 
-  const handleChatBtnClick = () => {
-    if (!isButtonDisabled) {
-      toast.info("Experiencing high traffic, Please wait a moment.", {
-        position: toast.POSITION.TOP_CENTER,
-        onOpen: () => setIsButtonDisabled(true),
-        onClose: () => setIsButtonDisabled(false),
-      });
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem("currentUser");
+      if (raw) {
+        setCurrentUser(JSON.parse(raw));
+      } else {
+        setCurrentUser(null);
+      }
+    } catch {
+      setCurrentUser(null);
     }
-  };
+  }, [location.pathname]); 
 
-  return (
-    <div className="navbar-section">
-      <h1 className="navbar-title">
-        <Link to="/">
-          Health <span className="navbar-sign">+</span>
-        </Link>
-      </h1>
-
-      {/* Desktop */}
-      <ul className="navbar-items">
+  
+  let middleMenu;
+  if (!currentUser) {
+   
+    middleMenu = (
+      <ul className="navbar-menu">
         <li>
-          <Link to="/" className="navbar-links">
-            Home
-          </Link>
+          <Link to="/" className="navbar-link">โฮม</Link>
         </li>
         <li>
-          <a href="#services" className="navbar-links">
-            Services
-          </a>
+          <a href="#services" className="navbar-link">บริการ</a>
         </li>
         <li>
-          <a href="#about" className="navbar-links">
-            About
-          </a>
+          <a href="#about" className="navbar-link">เกี่ยวกับเรา</a>
         </li>
         <li>
-          <a href="#reviews" className="navbar-links">
-            Reviews
-          </a>
+          <a href="#reviews" className="navbar-link">รีวิว</a>
         </li>
         <li>
-          <a href="#doctors" className="navbar-links">
-            Doctors
-          </a>
+          <a href="#doctors" className="navbar-link">แพทย์</a>
         </li>
       </ul>
+    );
+  } else if (currentUser.role === "doctor") {
+    
+    middleMenu = (
+      <ul className="navbar-menu">
+        <li>
+          <button className="navbar-link navbar-btnlike">ข้อมูลคนไข้</button>
+        </li>
+        <li>
+          <button className="navbar-link navbar-btnlike">บริการทางการแพทย์</button>
+        </li>
+        <li>
+          <button className="navbar-link navbar-btnlike">บริการทางการแพทย์</button>
+        </li>
+        <li>
+          <button className="navbar-link navbar-btnlike">บริการทางการแพทย์</button>
+        </li>
+      </ul>
+    );
+  } else {
+    
+    middleMenu = (
+      <ul className="navbar-menu">
+        <li>
+          <button className="navbar-link navbar-btnlike">ข้อมูลผู้ป่วย</button>
+        </li>
+        <li>
+          <button className="navbar-link navbar-btnlike">การนัดหมาย</button>
+        </li>
+        <li>
+          <button className="navbar-link navbar-btnlike">ประวัติการรักษา</button>
+        </li>
+        <li>
+          <button className="navbar-link navbar-btnlike">การเงิน</button>
+        </li>
+      </ul>
+    );
+  }
 
-      <button
-        className="navbar-btn"
-        type="button"
-        disabled={isButtonDisabled}
-        onClick={handleChatBtnClick}
-      >
-        <FontAwesomeIcon icon={faCommentDots} /> Live Chat
-      </button>
+  
+  const handleLogout = () => {
+    localStorage.removeItem("currentUser");
+    setCurrentUser(null);
+  };
 
-      {/* Mobile */}
-      <div className={`mobile-navbar ${nav ? "open-nav" : ""}`}>
-        <div onClick={openNav} className="mobile-navbar-close">
-          <FontAwesomeIcon icon={faXmark} className="hamb-icon" />
+  let rightSide;
+  if (!currentUser) {
+    rightSide = (
+      <Link to="/login" className="login-button-outline">
+        <span className="login-icon">💬</span>
+        <span>เข้าสู่ระบบ</span>
+      </Link>
+    );
+  } else {
+    rightSide = (
+      <div className="navbar-loggedin">
+        <span className="user-label">
+          {currentUser.role === "doctor" ? "👨‍⚕️" : "🧑‍⚕️"}{" "}
+          {currentUser.firstName || ""} {currentUser.lastName || ""}
+        </span>
+        <button className="logout-button-outline" onClick={handleLogout}>
+          ออกจากระบบ
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <header className="navbar">
+      <div className="navbar-container">
+        {}
+        <div className="navbar-left">
+          <Link to="/" className="navbar-logo">
+           KU Hospital Management <span className="logo-plus">+</span>
+          </Link>
         </div>
 
-        <ul className="mobile-navbar-links">
-          <li>
-            <Link onClick={openNav} to="/">
-              Home
-            </Link>
-          </li>
-          <li>
-            <a onClick={openNav} href="#services">
-              Services
-            </a>
-          </li>
-          <li>
-            <a onClick={openNav} href="#about">
-              About
-            </a>
-          </li>
-          <li>
-            <a onClick={openNav} href="#reviews">
-              Reviews
-            </a>
-          </li>
-          <li>
-            <a onClick={openNav} href="#doctors">
-              Doctors
-            </a>
-          </li>
-          <li>
-            <a onClick={openNav} href="#contact">
-              Contact
-            </a>
-          </li>
-        </ul>
-      </div>
+        {}
+        <nav className="navbar-center">{middleMenu}</nav>
 
-      {/* Hamburger Icon */}
-      <div className="mobile-nav">
-        <FontAwesomeIcon
-          icon={faBars}
-          onClick={openNav}
-          className="hamb-icon"
-        />
+        {}
+        <div className="navbar-right">{rightSide}</div>
       </div>
-    </div>
+    </header>
   );
 }
-
-export default Navbar;
