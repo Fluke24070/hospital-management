@@ -8,44 +8,37 @@ function Info() {
     <div className="info-section" id="services">
       <div className="info-title-content">
         <h3 className="info-title">
-          <span>What We Do</span>
+          <span>เกี่ยวกับพวกเรา</span>
         </h3>
         <p className="info-description">
-          We bring healthcare to your convenience, offering a comprehensive
-          range of on-demand medical services tailored to your needs. Our
-          platform allows you to connect with experienced online doctors who
-          provide expert medical advice, issue online prescriptions, and offer
-          quick refills whenever you require them.
+          เรานำบริการดูแลสุขภาพมาสู่ความสะดวกสบายของคุณ 
+          โดยนำเสนอบริการทางการแพทย์แบบครบวงจรที่ตอบโจทย์ความต้องการของคุณ 
+          แพลตฟอร์มของเราช่วยให้คุณสามารถเชื่อมต่อกับแพทย์ออนไลน์ผู้มีประสบการณ์ 
+          เพื่อรับคำแนะนำทางการแพทย์จากผู้เชี่ยวชาญ ออกใบสั่งยาออนไลน์ และต่ออายุยาได้อย่างรวดเร็วทุกเมื่อที่คุณต้องการ
         </p>
       </div>
 
       <div className="info-cards-content">
         <InformationCard
-          title="Emergency Care"
-          description="Our Emergency Care service is designed to be your reliable support
-            in critical situations. Whether it's a sudden illness, injury, or
-            any medical concern that requires immediate attention, our team of
-            dedicated healthcare professionals is available 24/7 to provide
-            prompt and efficient care."
+          title="บริการฉุกเฉินทางการแพทย์"
+          description="บริการดูแลกรณีฉุกเฉินของเราได้รับการออกแบบมาเพื่อเป็นการสนับสนุนที่คุณวางใจได้ในสถานการณ์วิกฤต 
+                       ไม่ว่าจะเป็นอาการเจ็บป่วยกะทันหัน การบาดเจ็บ หรือปัญหาทางการแพทย์ใด ๆ ที่ต้องการการดูแลทันที
+                       ทีมแพทย์และบุคลากรทางการแพทย์ของเราพร้อมให้บริการตลอด 24 ชั่วโมงทุกวัน เพื่อมอบการดูแลที่รวดเร็วและมีประสิทธิภาพแก่คุณ"
           icon={faTruckMedical}
         />
 
         <InformationCard
-          title="Heart Disease"
-          description="Our team of experienced cardiologists and medical experts use
-            state-of-the-art technology to assess your cardiovascular health and
-            design personalized treatment plans. From comprehensive screenings
-            to advanced interventions, we are committed to helping you maintain
-            a healthy heart and lead a fulfilling life."
+          title="หัวใจ"
+          description="Oทีมแพทย์ผู้เชี่ยวชาญด้านหัวใจและผู้เชี่ยวชาญทางการแพทย์ของเราใช้เทคโนโลยีล้ำสมัยเพื่อตรวจประเมินสุขภาพหัวใจและหลอดเลือดของคุณ 
+          พร้อมออกแบบแผนการรักษาเฉพาะบุคคล ตั้งแต่การตรวจสุขภาพอย่างละเอียดไปจนถึงการรักษาขั้นสูง เรามุ่งมั่นที่จะช่วยให้คุณรักษาหัวใจให้แข็งแรงและมีชีวิตที่เต็มเปี่ยมด้วยคุณภาพชีวิต."
           icon={faHeartPulse}
         />
 
         <InformationCard
-          title="Dental Care"
-          description="Smile with confidence as our Dental Care services cater to all your
-            oral health needs. Our skilled dentists provide a wide range of
-            treatments, from routine check-ups and cleanings to cosmetic
-            procedures and restorative treatments."
+          title="ศูนย์ทันตกรรม"
+          description="ยิ้มได้อย่างมั่นใจด้วยบริการดูแลช่องปากของเรา ที่ตอบสนองทุกความต้องการด้านสุขภาพฟัน
+           แพทย์ผู้เชี่ยวชาญของเรามีความสามารถในการให้การรักษาหลากหลาย ตั้งแต่การตรวจสุขภาพฟันประจำและทำความสะอาด 
+           ไปจนถึงขั้นตอนด้านความงามและการฟื้นฟูฟัน."
           icon={faTooth}
         />
       </div>

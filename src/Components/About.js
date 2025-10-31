@@ -12,30 +12,30 @@ function About() {
 
       <div className="about-text-content">
         <h3 className="about-title">
-          <span>About Us</span>
+          <span>เกี่ยวกับเรา</span>
         </h3>
         <p className="about-description">
-          Welcome to Health Plus, your trusted partner for accessible and
-          personalized healthcare. Our expert doctors offer online consultations
-          and specialized services, prioritizing your well-being. Join us on
-          this journey towards a healthier you.
+         ยินดีต้อนรับสู่ Health Plus พันธมิตรที่คุณไว้วางใจได้ในการดูแลสุขภาพที่เข้าถึงง่ายและออกแบบเฉพาะสำหรับคุณ 
+         แพทย์ผู้เชี่ยวชาญของเราพร้อมให้คำปรึกษาออนไลน์และบริการเฉพาะทาง โดยให้ความสำคัญกับสุขภาพและความเป็นอยู่ที่ดีของคุณ 
+         มาร่วมเดินทางไปสู่ชีวิตที่มีสุขภาพดีไปด้วยกัน
         </p>
 
-        <h4 className="about-text-title">Your Solutions</h4>
+        <h4 className="about-text-title">ปัญหาของคุณ</h4>
 
         <SolutionStep
-          title="Choose a Specialist"
-          description="Find your perfect specialist and book with ease at Health Plus. Expert doctors prioritize your health, offering tailored care."
+          title="เลือกแพทย์ของคุณ"
+          description="ค้นหาผู้เชี่ยวชาญที่เหมาะสมกับคุณ และจองนัดได้อย่างง่ายดายกับ Health Plus
+                        แพทย์ผู้เชี่ยวชาญของเราพร้อมดูแลสุขภาพของคุณอย่างใส่ใจ ด้วยการให้บริการที่ปรับให้เหมาะกับความต้องการเฉพาะของคุณ."
         />
 
         <SolutionStep
-          title="Make a Schedule"
-          description="Choose the date and time that suits you best, and let our dedicated team of medical professionals ensure your well-being with personalized care."
+          title="ระบุวันที่"
+          description="เลือกวันและเวลาที่สะดวกที่สุดสำหรับคุณ แล้วปล่อยให้ทีมแพทย์ผู้เชี่ยวชาญของเราดูแลสุขภาพของคุณด้วยการบริการที่ใส่ใจและปรับให้เหมาะกับความต้องการเฉพาะของคุณ"
         />
 
         <SolutionStep
-          title="Get Your Solutions"
-          description="Our experienced doctors and specialists are here to provide expert advice and personalized treatment plans, helping you achieve your best possible health."
+          title="โรคที่เจอ"
+          description="แพทย์และผู้เชี่ยวชาญมากประสบการณ์ของเราพร้อมให้คำแนะนำจากผู้เชี่ยวชาญและวางแผนการรักษาเฉพาะบุคคล เพื่อช่วยให้คุณบรรลุสุขภาพที่ดีที่สุดเท่าที่จะเป็นไปได้."
         />
       </div>
     </div>
