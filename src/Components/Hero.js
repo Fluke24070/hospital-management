@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Doctor from "../Assets/doctorprofile_hero1.jpg";
+import Doctor from "../Assets/pho01.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendarCheck, faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate  } from "react-router-dom";
@@ -15,6 +15,10 @@ function Hero() {
 
   const handleBookAppointmentClick = () => {
     navigate("/appointment");
+  };
+
+    const handleBookAdminClick = () => {
+    navigate("/admins");
   };
 
   useEffect(() => {
@@ -42,7 +46,7 @@ function Hero() {
           </h2>
           <p className="text-descritpion">
             พูดคุยกับแพทย์ออนไลน์และรับคำแนะนำทางการแพทย์
-            ใบสั่งยาออนไลน์ การต่ออายุยา และใบรับรองแพทย์ได้ภายในไม่กี่นาที
+            การต่ออายุยา 
             บริการดูแลสุขภาพตามความต้องการ อยู่แค่ปลายนิ้วของคุณ
           </p>
           <button
@@ -50,8 +54,17 @@ function Hero() {
             type="button"
             onClick={handleBookAppointmentClick}
           >
-            <FontAwesomeIcon icon={faCalendarCheck} /> นัดหมายเลย
+            <FontAwesomeIcon icon={faCalendarCheck} /> นัดหมาย
           </button>
+
+          <button
+            className="text-appointment-btn"
+            type="button"
+            onClick={handleBookAdminClick}
+          >
+            <FontAwesomeIcon icon={faCalendarCheck} /> admin
+          </button>
+
 
           <div className="text-stats">
             <div className="text-stats-container">

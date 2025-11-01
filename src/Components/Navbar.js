@@ -80,8 +80,6 @@ export default function Navbar() {
       </ul>
     );
   }
-
-  
   const handleLogout = () => {
     localStorage.removeItem("currentUser");
     setCurrentUser(null);

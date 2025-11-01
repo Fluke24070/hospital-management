@@ -23,70 +23,70 @@ function Footer() {
         </div>
 
         <div className="ft-list">
-          <p className="ft-list-title">Services</p>
+          <p className="ft-list-title"></p>
           <ul className="ft-list-items">
             <li>
-              <a href="#services">Emergency Care</a>
+              <a href="#services"></a>
             </li>
             <li>
-              <a href="#services">Heart Disease</a>
+              <a href="#services"></a>
             </li>
             <li>
-              <a href="#services">Dental Care</a>
+              <a href="#services"></a>
             </li>
             <li>
-              <a href="#services">Prescription</a>
+              <a href="#services"></a>
             </li>
             <li>
-              <a href="#services">Insights for doctors</a>
+              <a href="#services"></a>
             </li>
           </ul>
         </div>
 
         <div className="ft-list">
-          <p className="ft-list-title">Legal</p>
+          <p className="ft-list-title"></p>
           <ul className="ft-list-items">
             <li>
-              <Link to={"/legal"}>General Info</Link>
+              <Link to={"/legal"}></Link>
             </li>
             <li>
-              <Link to={"/legal"}>Privacy Policy</Link>
+              <Link to={"/legal"}></Link>
             </li>
             <li>
-              <Link to={"/legal"}>Terms of Services</Link>
+              <Link to={"/legal"}></Link>
             </li>
             <li>
-              <Link to={"/legal"}>Consultations</Link>
+              <Link to={"/legal"}></Link>
             </li>
             <li>
-              <Link to={"/legal"}>How it Works</Link>
+              <Link to={"/legal"}></Link>
             </li>
           </ul>
         </div>
 
         <div className="ft-list" id="contact">
-          <p className="ft-list-title">Talk To Us</p>
+          <p className="ft-list-title"></p>
           <ul className="ft-list-items">
             <li>
-              <a href="mailto:support@healthplus.com">support@healthplus.com</a>
+              <a href="mailto:support@healthplus.com"></a>
             </li>
             <li>
               <a href="mailto:appointment@healthplus.com">
-                appointment@healthplus.com
+                
               </a>
             </li>
             <li>
-              <a href="tel:+022 5454 5252">+022 5454 5252</a>
+              <a href="tel:+022 5454 5252"></a>
             </li>
             <li>
-              <a href="tel:+022 2326 6232">+022 2326 6232</a>
+              <a href="tel:+022 2326 6232"></a>
             </li>
           </ul>
         </div>
       </div>
 
       <div className="ft-copyright">
-        <p>© 2013-2023 Health+. All rights reserved.</p>
+        <p>© 2013-2023 KU Hospital Management. All rights reserved.</p>
 
         <ul className="ft-social-links">
           <li>

@@ -13,11 +13,11 @@
 
 .navbar-container {
     max-width: 1200px;
-    margin: 0 auto;          /* จัด navbar ให้อยู่กลางหน้า */
-    padding: 16px 20px;      /* ระยะด้านบน/ล่าง 16px ด้านซ้าย/ขวา 20px */
+    margin: 0 auto;          
+    padding: 16px 20px;     
     display: flex;
     align-items: center;
-    justify-content: space-between; /* โลโก้ซ้าย ไอเท็มอื่นชิดขวา */
+    justify-content: space-between; 
 }
   
   .navbar-logo {

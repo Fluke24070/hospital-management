@@ -13,38 +13,36 @@ function Doctors() {
         <h3 className="dt-title">
           <span>แพทย์ผู้เชียวชาญ</span>
         </h3>
-
         <p className="dt-description">
           ทีมงานแพทย์ผู้เชียวชาญของเรา พร้อมให้คำปรึกษา
         </p>
       </div>
-
       <div className="dt-cards-content">
         <DoctorCard
           img={profile1}
-          name="นาย แพทย์ 1"
-          title="General Surgeons"
+          name="นาย แพทย์ ก"
+          title="แผนกอายุรกรรม (อายุรแพทย์)"
           stars="4.9"
           reviews="1800"
         />
         <DoctorCard
           img={profile2}
-          name="นาย แพทย์ 1"
-          title="Hematologists"
+          name="นาย แพทย์ ข"
+          title="ผนกกุมารเวชกรรม (เด็ก)"
           stars="4.8"
           reviews="700"
         />
         <DoctorCard
           img={profile3}
-          name="นาย แพทย์ 1"
-          title="Endocrinologists"
+          name="นาย แพทย์ ค"
+          title="แผนกศัลยกรรมทั่วไป"
           stars="4.7"
           reviews="450"
         />
         <DoctorCard
           img={profile4}
-          name="นาย แพทย์ 1"
-          title="Hematologists"
+          name="นาย แพทย์ ง"
+          title="แผนกศัลยกรรมทั่วไป"
           stars="4.8"
           reviews="500"
         />

@@ -12,6 +12,7 @@ import NotFound from "./Pages/NotFound";
 import Login from "./Pages/login";
 import Register from "./Pages/register";
 import Reset from "./Pages/reset";
+import Admin from "./Pages/admins";
 
 function App() {
   return (
@@ -27,8 +28,10 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/reset" element={<Reset />} />
+          <Route path="/admins" element={<Admin />} />
 
           <Route path="*" element={<NotFound />} />
+          
         </Routes>
       </Router>
     </div>

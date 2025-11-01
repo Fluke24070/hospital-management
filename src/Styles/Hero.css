@@ -4,7 +4,7 @@
     justify-content: center;
     align-items: center;
     gap: 24px;
-    background: linear-gradient(to right, #199908, #FBFCFF);
+    background: linear-gradient(to right, #07b86e, #FBFCFF);
 }
 /* Text section */
 .text-section {
@@ -41,7 +41,7 @@
     border: 1px solid transparent;
     border-radius: 28px;
     outline: transparent;
-    background-color: #05d432;
+    background-color: #0f99bb;
     font-size: 18px;
     font-family: 'Rubik', sans-serif;
     letter-spacing: .8px;

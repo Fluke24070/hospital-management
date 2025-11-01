@@ -24,7 +24,6 @@ export default function Login() {
       return;
     }
 
-    // เก็บ currentUser เอาไว้ให้ Navbar ใช้
     localStorage.setItem(
       "currentUser",
       JSON.stringify({
