@@ -1,90 +1,141 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import "../Styles/admin.css";
 
 export default function Admins() {
-  const navigate = useNavigate();
-
-  const [appointments] = useState([
-    { id: 1, doctor: "Dr. Somchai", patient: "Somchai Prasert", date: "2025-11-02", time: "09:00" },
-    { id: 2, doctor: "Dr. Thitiya", patient: "Thitiya Soosuk", date: "2025-11-02", time: "10:30" },
-    { id: 3, doctor: "Dr. Somchai", patient: "Somsak Chaiyo", date: "2025-11-03", time: "11:00" },
-    { id: 4, doctor: "Dr. Thitiya", patient: "Nida Chansiri", date: "2025-11-04", time: "14:00" },
-  ]);
-
-  const [activeTable, setActiveTable] = useState(null); // today / week / null
+  const [viewType, setViewType] = useState("today");
   const [showTable, setShowTable] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState(null);
+  const [modalType, setModalType] = useState(null);
+  const [historyData, setHistoryData] = useState([]);
 
-  const today = "2025-11-02";
+  const appointmentsToday = [
+    { id: 1, patient: "Somchai Prasert", doctor: "Dr. Somchai", date: "2025-11-02", time: "09:00" },
+    { id: 2, patient: "Thitiya Soosuk", doctor: "Dr. Thitiya", date: "2025-11-02", time: "10:30" },
+  ];
 
-  const handleLogout = () => {
-    localStorage.removeItem("currentUser");
-    navigate("/login");
+  const appointmentsWeek = [
+    { id: 3, patient: "Narin Boonmee", doctor: "Dr. Somchai", date: "2025-11-03", time: "11:00" },
+    { id: 4, patient: "Anong Srisuk", doctor: "Dr. Thitiya", date: "2025-11-04", time: "14:00" },
+  ];
+
+  const currentAppointments =
+    viewType === "today" ? appointmentsToday : appointmentsWeek;
+
+  const handleOpenModal = async (patient, type) => {
+    setSelectedPatient(patient);
+    setModalType(type);
+
+    if (type === "viewHistory") {
+      try {
+        const response = await fetch(
+          `http://localhost/hospital/get_patient_history.php?patient_name=${patient.patient}`
+        );
+        const data = await response.json();
+        setHistoryData(data);
+      } catch (error) {
+        console.error("Error fetching history:", error);
+      }
+    }
   };
 
-  const todayAppointments = appointments.filter(appt => appt.date === today);
-  const weekAppointments = appointments; // สามารถกรอง 7 วันจริงได้
-
-  const displayedAppointments = activeTable === "today" ? todayAppointments :
-                                activeTable === "week" ? weekAppointments : [];
-
-  const tableTitle = activeTable === "today" ? "📅 นัดหมายวันนี้" :
-                     activeTable === "week" ? "🗓 นัดหมายสัปดาห์นี้" : "";
+  const handleCloseModal = () => {
+    setSelectedPatient(null);
+    setModalType(null);
+    setHistoryData([]);
+  };
 
   return (
-    <div className="admin-page">
-      <header className="admin-header">
-        <h1>Admin / Doctor Dashboard</h1>
-        <button className="logout-btn" onClick={handleLogout}>Log Out</button>
-      </header>
+    <div className="admin-container">
+      <h1 className="page-title">Doctor Dashboard</h1>
+      <p className="page-subtitle">
+        หน้าสำหรับแพทย์ตรวจสอบนัดหมายและดูประวัติผู้ป่วย
+      </p>
 
-      <div className="dashboard-buttons">
-        {/* ปุ่มดูงานวันนี้ */}
-        <div className="dashboard-card">
-          <h2>👩‍⚕️ ดูงานวันนี้</h2>
-          <p>แสดงนัดหมายของหมอวันนี้ พร้อมผู้ป่วยที่ต้องดู</p>
-          <button className="big-btn" onClick={() => { setActiveTable("today"); setShowTable(true); }}>
-            ดูงานวันนี้
-          </button>
-        </div>
-
-        {/* ปุ่มดูงานสัปดาห์นี้ */}
-        <div className="dashboard-card">
-          <h2>🗓 ดูงานสัปดาห์นี้</h2>
-          <p>แสดงนัดหมายของหมอทั้งสัปดาห์นี้</p>
-          <button className="big-btn" onClick={() => { setActiveTable("week"); setShowTable(true); }}>
-            ดูงานสัปดาห์นี้
-          </button>
-        </div>
+      <div className="button-container">
+        <button
+          className={`toggle-btn ${viewType === "today" ? "active" : ""}`}
+          onClick={() => setViewType("today")}
+        >
+          🩺 ดูงานของวันนี้
+        </button>
+        <button
+          className={`toggle-btn ${viewType === "week" ? "active" : ""}`}
+          onClick={() => setViewType("week")}
+        >
+          📅 ดูงานของสัปดาห์นี้
+        </button>
       </div>
 
-      {/* ตารางด้านล่าง */}
+      <button className="view-btn" onClick={() => setShowTable(!showTable)}>
+        {showTable ? "ปิดตาราง" : "ดูตาราง"}
+      </button>
+
       {showTable && (
-        <div className="table-section">
-          <div className="table-header">
-            <h2>{tableTitle}</h2>
-            <button className="close-btn" onClick={() => setShowTable(false)}>ปิดตาราง</button>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th>หมอ</th>
-                <th>ผู้ป่วย</th>
-                <th>วันที่</th>
-                <th>เวลา</th>
+        <table className="appointment-table">
+          <thead>
+            <tr>
+              <th>ชื่อผู้ป่วย</th>
+              <th>แพทย์ผู้ดูแล</th>
+              <th>วันที่</th>
+              <th>เวลา</th>
+              <th>การจัดการ</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentAppointments.map((item) => (
+              <tr key={item.id}>
+                <td>{item.patient}</td>
+                <td>{item.doctor}</td>
+                <td>{item.date}</td>
+                <td>{item.time}</td>
+                <td>
+                  <button
+                    className="info-btn"
+                    onClick={() => handleOpenModal(item, "viewHistory")}
+                  >
+                    📋 ดูประวัติทั้งหมด
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {displayedAppointments.map(appt => (
-                <tr key={appt.id}>
-                  <td>{appt.doctor}</td>
-                  <td>{appt.patient}</td>
-                  <td>{appt.date}</td>
-                  <td>{appt.time}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+            ))}
+          </tbody>
+        </table>
+      )}
+
+      {modalType === "viewHistory" && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>ประวัติการรักษาของ {selectedPatient.patient}</h2>
+            {historyData.length > 0 ? (
+              <table className="history-table">
+                <thead>
+                  <tr>
+                    <th>วันที่</th>
+                    <th>อาการ / วินิจฉัย</th>
+                    <th>ยาที่จ่าย</th>
+                    <th>ค่ารักษา (บาท)</th>
+                    <th>แพทย์ผู้ดูแล</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {historyData.map((record) => (
+                    <tr key={record.id}>
+                      <td>{record.date}</td>
+                      <td>{record.diagnosis}</td>
+                      <td>{record.medicine}</td>
+                      <td>{record.cost}</td>
+                      <td>{record.doctor_name}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <p style={{ textAlign: "center" }}>ไม่มีข้อมูลการรักษา</p>
+            )}
+            <button className="close-btn" onClick={handleCloseModal}>
+              ปิด
+            </button>
+          </div>
         </div>
       )}
     </div>

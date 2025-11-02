@@ -21,6 +21,10 @@ function Hero() {
     navigate("/admins");
   };
 
+      const handleBookPatientClick = () => {
+    navigate("/patient");
+  };
+
   useEffect(() => {
     const onPageScroll = () => {
       if (window.scrollY > 600) {
@@ -63,6 +67,14 @@ function Hero() {
             onClick={handleBookAdminClick}
           >
             <FontAwesomeIcon icon={faCalendarCheck} /> admin
+          </button>
+
+                    <button
+            className="text-appointment-btn"
+            type="button"
+            onClick={handleBookPatientClick}
+          >
+            <FontAwesomeIcon icon={faCalendarCheck} /> patient
           </button>
 
 

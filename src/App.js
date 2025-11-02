@@ -13,6 +13,7 @@ import Login from "./Pages/login";
 import Register from "./Pages/register";
 import Reset from "./Pages/reset";
 import Admin from "./Pages/admins";
+import Patient from "./Pages/patients";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/reset" element={<Reset />} />
           <Route path="/admins" element={<Admin />} />
+          <Route path="/patient" element={<Patient />} />
 
           <Route path="*" element={<NotFound />} />
           
