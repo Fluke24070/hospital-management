@@ -4,7 +4,6 @@ import "../Styles/patient.css";
 
 export default function Patient() {
   const navigate = useNavigate();
-
   const [activeTab, setActiveTab] = useState("history");
 
   const handleLogout = () => {
@@ -12,26 +11,38 @@ export default function Patient() {
     navigate("/login");
   };
 
+  // ข้อมูลผู้ป่วย
+  const patient = { name: "นาย สมชาย ใจดี" };
+
   // ตัวอย่างข้อมูล
   const medicalHistory = [
     { id: 1, date: "2025-10-28", doctor: "Dr. Somchai", diagnosis: "ไข้หวัดใหญ่", treatment: "ให้ยาแก้ไข้และพักผ่อน" },
     { id: 2, date: "2025-09-15", doctor: "Dr. Thitiya", diagnosis: "ปวดท้อง", treatment: "ให้ยาแก้ปวดและตรวจเลือด" },
   ];
 
-  const medicineReceipts = [
-    { id: 1, date: "2025-10-28", medicine: "Paracetamol 500mg", quantity: 10, price: 50 },
-    { id: 2, date: "2025-10-28", medicine: "Vitamin C 1000mg", quantity: 5, price: 100 },
-  ];
+  const [medicineReceipts, setMedicineReceipts] = useState([
+    { id: 1, date: "2025-10-28", medicine: "Paracetamol 500mg", quantity: 10, price: 50, paid: false },
+    { id: 2, date: "2025-10-28", medicine: "Vitamin C 1000mg", quantity: 5, price: 100, paid: true },
+  ]);
 
   const paymentBills = [
     { id: 1, date: "2025-10-28", description: "ค่ารักษา + ค่ายา", total: 250 },
     { id: 2, date: "2025-09-15", description: "ค่าตรวจและยา", total: 480 },
   ];
 
+  // ฟังก์ชันเปลี่ยนสถานะจ่ายเงิน
+  const togglePaidStatus = (id) => {
+    setMedicineReceipts(prev =>
+      prev.map(item =>
+        item.id === id ? { ...item, paid: !item.paid } : item
+      )
+    );
+  };
+
   return (
     <div className="patient-page">
       <header className="patient-header">
-        <h1>Patient Dashboard</h1>
+        <h1>ดูประวัติการรักษา / ค่าใช้จ่าย</h1>
         <button className="logout-btn" onClick={handleLogout}>Log Out</button>
       </header>
 
@@ -57,6 +68,7 @@ export default function Patient() {
       </div>
 
       <div className="patient-content">
+        {/* ประวัติการรักษา */}
         {activeTab === "history" && (
           <div className="content-box">
             <h2>🩺 ประวัติการรักษา</h2>
@@ -80,9 +92,15 @@ export default function Patient() {
                 ))}
               </tbody>
             </table>
+
+            {/* แสดงชื่อผู้ป่วย */}
+            <div className="patient-name">
+              <strong>ชื่อผู้ป่วย:</strong> {patient.name}
+            </div>
           </div>
         )}
 
+        {/* ใบเสร็จจ่ายยา */}
         {activeTab === "receipt" && (
           <div className="content-box">
             <h2>💊 ใบเสร็จจ่ายยา</h2>
@@ -93,6 +111,7 @@ export default function Patient() {
                   <th>ชื่อยา</th>
                   <th>จำนวน</th>
                   <th>ราคา (บาท)</th>
+                  <th>สถานะการจ่ายเงิน</th>
                 </tr>
               </thead>
               <tbody>
@@ -102,6 +121,12 @@ export default function Patient() {
                     <td>{item.medicine}</td>
                     <td>{item.quantity}</td>
                     <td>{item.price}</td>
+                    <td>
+                      {item.paid ? "จ่ายแล้ว ✅" : "ยังไม่จ่าย ❌"}{" "}
+                      <button onClick={() => togglePaidStatus(item.id)}>
+                        เปลี่ยนสถานะ
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -109,6 +134,7 @@ export default function Patient() {
           </div>
         )}
 
+        {/* บิลจ่ายเงิน */}
         {activeTab === "bill" && (
           <div className="content-box">
             <h2>💵 บิลจ่ายเงิน</h2>
