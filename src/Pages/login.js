@@ -1,41 +1,39 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../Styles/login.css";
 
 export default function Login() {
   const navigate = useNavigate();
-  const [citizenId, setCitizenId] = useState("");
+  const [identityID, setIdentityID] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setMessage("");
 
-    const users = JSON.parse(localStorage.getItem("hms_users")) || [];
+    try {
+      const res = await axios.post("http://localhost:5000/login", {
+        identityID,
+        password,
+      });
 
-    const foundUser = users.find(
-      (u) => u.citizenId === citizenId && u.password === password
-    );
+      if (res.data.status === 200) {
+        localStorage.setItem("currentUser", JSON.stringify(res.data.user));
 
-    if (!foundUser) {
-      setMessage("ไม่พบสมาชิก โปรดสมัครสมาชิกก่อนเข้าสู่ระบบ");
-      return;
+        alert("เข้าสู่ระบบสำเร็จ");
+        navigate("/", { replace: true });
+      } else {
+        setMessage(res.data.message || "เข้าสู่ระบบไม่สำเร็จ");
+      }
+    } catch (err) {
+      console.error(err);
+      setMessage(
+        err.response?.data?.message || "เกิดข้อผิดพลาดในการเข้าสู่ระบบ"
+      );
     }
-
-    localStorage.setItem(
-      "currentUser",
-      JSON.stringify({
-        citizenId: foundUser.citizenId,
-        firstName: foundUser.firstName,
-        lastName: foundUser.lastName,
-        role: foundUser.role || "patient",
-      })
-    );
-
- 
-    navigate("/", { replace: true });
   };
 
   return (
@@ -50,9 +48,9 @@ export default function Login() {
           <input
             className="login-input"
             type="text"
-            value={citizenId}
+            value={identityID}
             onChange={(e) =>
-              setCitizenId(e.target.value.replace(/\D/g, "").slice(0, 13))
+              setIdentityID(e.target.value.replace(/\D/g, "").slice(0, 13))
             }
             placeholder="กรอกเลขบัตร 13 หลัก"
             required
