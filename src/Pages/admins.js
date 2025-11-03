@@ -1,45 +1,174 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/admin.css";
 
 export default function Admins() {
   const navigate = useNavigate();
+
+  // view control
   const [showToday, setShowToday] = useState(false);
   const [showWeek, setShowWeek] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
 
-  const doctor = { id: 1, name: "นพ. สมชาย ใจดี", photo: "" }; // ใส่ path รูปของคุณใน photo
-
-  const appointmentsToday = [
-    { id: 1, patient: "นาย สมหมาย ใจดี", gender: "ชาย", age: 48, time: "09:00", dept: "อายุรกรรม", status: "รอตรวจ" },
-    { id: 2, patient: "น.ส. มาลัย จิตงาม", gender: "หญิง", age: 35, time: "10:00", dept: "สูตินรีเวช", status: "ตรวจเสร็จ" },
-  ];
-
-  const appointmentsWeek = [
+  // data state
+  const [appointmentsToday, setAppointmentsToday] = useState([]);
+  const [appointmentsWeek] = useState([
     { id: 3, patient: "นาย วิทยา บุญเลิศ", date: "2025-11-03", time: "13:00" },
     { id: 4, patient: "น.ส. กาญจนา แก้วใส", date: "2025-11-05", time: "09:30" },
-  ];
-
-  const patientHistory = [
+  ]);
+  const [patientHistory] = useState([
     { id: 1, date: "2025-10-28", disease: "ไข้หวัด", medicine: "พาราเซตามอล", cost: 300 },
     { id: 2, date: "2025-09-15", disease: "ปวดหัว", medicine: "ไอบูโพรเฟน", cost: 250 },
-  ];
+  ]);
+
+  const doctor = { id: 1, name: "นพ. สมชาย ใจดี", photo: "" };
+
+  // form data for treatment
+  const [formData, setFormData] = useState({
+    name: "",
+    sex: "",
+    age: "",
+    treat: "",
+    med: "",
+    price: "",
+  });
+  const [appointmentsAll, setAppointmentsAll] = useState([]);
+  const fetchAllAppointments = async () => {
+  try {
+    const response = await fetch("http://localhost:5000/allappointments");
+    const data = await response.json();
+    console.log("All appointments API:", data.data);
+
+    if (response.ok && Array.isArray(data.data)) {
+      const formatted = data.data.map((item, index) => ({
+        id: index + 1,
+        appointID: item.appointID ? item.appointID.trim() : "",
+        patient: item.appointID ? item.appointID.trim() : "ไม่ระบุ",
+        gender: item.sex ? item.sex.trim() : "",
+        phone: item.phonenum || "",
+        rawDate: item.appointmentdate,
+        date: item.appointmentdate ? new Date(item.appointmentdate).toLocaleDateString() : "",
+        time: item.appointmentdate ? new Date(item.appointmentdate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "",
+        status: "รอตรวจ",
+      }));
+      setAppointmentsAll(formatted);
+    } else {
+      console.error("Failed to fetch all appointments:", data);
+    }
+  } catch (err) {
+    console.error("Error fetching all appointments:", err);
+  }
+};
+
+
+  // currently selected appointment (when clicking "กรอกประวัติ")
+  const [selectedAppointment, setSelectedAppointment] = useState(null);
+
+  // fetch today's appointments from API
+  const fetchAppointmentsToday = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/appointments/today");
+      const data = await response.json();
+      console.log("API data:", data.data);
+
+      if (response.ok && Array.isArray(data.data)) {
+        const formatted = data.data.map((item, index) => ({
+          id: index + 1,
+          appointID: item.appointID ? item.appointID.trim() : "",
+          patient: item.appointID ? item.appointID.trim() : "ไม่ระบุ",
+          gender: item.sex ? item.sex.trim() : "",
+          phone: item.phonenum || "",
+          rawDate: item.appointmentdate,
+          time: item.appointmentdate ? new Date(item.appointmentdate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) : "",
+          status: "รอตรวจ",
+        }));
+        setAppointmentsToday(formatted);
+      } else {
+        console.error("Failed to fetch today's appointments:", data);
+      }
+    } catch (err) {
+      console.error("Error fetching today's appointments:", err);
+    }
+  };
+
+  // load when user opens "ดูงานของวันนี้"
+  useEffect(() => {
+    if (showToday) fetchAppointmentsToday();
+  }, [showToday]);
 
   const handleLogout = () => {
     localStorage.removeItem("currentUser");
     navigate("/login");
   };
 
+  // when click "กรอกประวัติ" - prefill form with appointment info
+  const openFormForAppointment = (appointment) => {
+    setSelectedAppointment(appointment);
+    setFormData({
+      name: appointment.patient || "",
+      sex: appointment.gender || "",
+      age: "", // left blank for user to fill (DB doesn't provide age)
+      treat: "",
+      med: "",
+      price: "",
+    });
+    setShowForm(true);
+    setShowHistory(false);
+  };
+
+  // submit treatment to backend /treat
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // basic client-side validation
+    if (!formData.name || !formData.sex || !formData.age || !formData.treat || !formData.med || formData.price === "") {
+      alert("กรุณากรอกข้อมูลให้ครบทุกช่อง");
+      return;
+    }
+
+    const payload = {
+      name: String(formData.name).trim(),
+      sex: String(formData.sex).trim(),
+      age: parseInt(formData.age, 10),
+      treat: String(formData.treat).trim(),
+      med: String(formData.med).trim(),
+      price: parseInt(formData.price, 10),
+    };
+
+    try {
+      console.log("Sending treat payload:", payload);
+      const res = await fetch("http://localhost:5000/treat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const resJson = await res.json();
+      console.log("Response from /treat:", resJson);
+
+      if (res.ok) {
+        alert("บันทึกข้อมูลการรักษาสำเร็จ");
+        setShowForm(false);
+        // รีเฟรชตารางวันนี้ถ้าต้องการ
+        if (showToday) fetchAppointmentsToday();
+      } else {
+        // ถ้า backend ส่ง message หรือ error ให้แสดง
+        const msg = resJson?.error || resJson?.message || "เกิดข้อผิดพลาด";
+        alert("เกิดข้อผิดพลาด: " + msg);
+      }
+    } catch (err) {
+      console.error("Error submitting treat:", err);
+      alert("ไม่สามารถเชื่อมต่อไปยังเซิร์ฟเวอร์ได้");
+    }
+  };
+
   return (
     <div className="admin-page">
-      {/* หัวข้อใหญ่ */}
       <header className="admin-header">
         <h1>ระบบจัดการงานแพทย์</h1>
         <button className="logout-btn" onClick={handleLogout}>Log Out</button>
       </header>
 
-      {/* รูปหมอ + ชื่อหมอ */}
       <div className="doctor-profile">
         <div className="doctor-avatar">
           {doctor.photo ? <img src={doctor.photo} alt={doctor.name} /> : <span role="img" aria-label="doctor">🩺</span>}
@@ -47,7 +176,6 @@ export default function Admins() {
         <h2>{doctor.name}</h2>
       </div>
 
-      {/* ปุ่มดูงานวันนี้ / สัปดาห์ */}
       <div className="dashboard-section">
         <div className="form-buttons">
           <button
@@ -65,14 +193,15 @@ export default function Admins() {
           <button
             className="view-btn"
             onClick={() => {
-              setShowWeek(true);
-              setShowToday(false);
-              setShowForm(false);
-              setShowHistory(false);
-            }}
-          >
-            📆 ดูงานของสัปดาห์นี้
-          </button>
+            setShowWeek(true);
+            setShowToday(false);
+            setShowForm(false);
+            setShowHistory(false);
+            fetchAllAppointments(); // เพิ่มตรงนี้
+          }}>
+            📆 ดูงานทั้งหมด
+           </button>
+
         </div>
       </div>
 
@@ -84,29 +213,29 @@ export default function Admins() {
             <thead>
               <tr>
                 <th>ชื่อผู้ป่วย</th>
+                <th>เบอร์โทรศัพท์</th>
                 <th>เพศ</th>
-                <th>อายุ</th>
                 <th>เวลา</th>
-                <th>แผนก</th>
-                <th>สถานะ</th>
                 <th>การจัดการ</th>
               </tr>
             </thead>
             <tbody>
-              {appointmentsToday.map(a => (
-                <tr key={a.id}>
-                  <td>{a.patient}</td>
-                  <td>{a.gender}</td>
-                  <td>{a.age}</td>
-                  <td>{a.time}</td>
-                  <td>{a.dept}</td>
-                  <td>{a.status}</td>
-                  <td>
-                    <button className="add-btn" onClick={() => { setShowForm(true); setShowHistory(false); }}>กรอกประวัติ</button>
-                    <button className="view-btn" onClick={() => { setShowHistory(true); setShowForm(false); }}>ดูประวัติ</button>
-                  </td>
-                </tr>
-              ))}
+              {appointmentsToday.length === 0 ? (
+                <tr><td colSpan="5" style={{ textAlign: "center" }}>ไม่มีคิววันนี้</td></tr>
+              ) : (
+                appointmentsToday.map((a) => (
+                  <tr key={a.id}>
+                    <td>{a.patient}</td>
+                    <td>{a.phone}</td>
+                    <td>{a.gender}</td>
+                    <td>{a.time}</td>
+                    <td>
+                      <button className="add-btn" onClick={() => openFormForAppointment(a)}>กรอกประวัติ</button>
+                      <button className="view-btn" onClick={() => { setSelectedAppointment(a); setShowHistory(true); setShowForm(false); }}>ดูประวัติ</button>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
           <button className="close-btn" onClick={() => setShowToday(false)}>ปิด</button>
@@ -116,24 +245,33 @@ export default function Admins() {
       {/* ตารางงานสัปดาห์นี้ */}
       {showWeek && (
         <div className="dashboard-section">
-          <h3>📆 ตารางงานของสัปดาห์นี้</h3>
+          <h3>📆 ตารางงานทั้งหมด</h3>
           <table className="styled-table">
             <thead>
               <tr>
                 <th>ชื่อผู้ป่วย</th>
-                <th>วันที่</th>
+                <th>เบอร์โทรศัพท์</th>
+                <th>เพศ</th>
                 <th>เวลา</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
-              {appointmentsWeek.map(a => (
-                <tr key={a.id}>
-                  <td>{a.patient}</td>
-                  <td>{a.date}</td>
-                  <td>{a.time}</td>
-                </tr>
-              ))}
-            </tbody>
+                 {appointmentsAll.length === 0 ? (
+    <tr><td colSpan="5" style={{ textAlign: "center" }}>ไม่มีข้อมูล</td></tr>
+  ) : (
+    appointmentsAll.map((a) => (
+      <tr key={a.id}>
+        <td>{a.patient}</td>
+        <td>{a.phone}</td>
+        <td>{a.gender}</td>
+        <td>{a.date} {a.time}</td>
+        <td>{a.status}</td>
+      </tr>
+    ))
+  )}
+              </tbody>
+
           </table>
           <button className="close-btn" onClick={() => setShowWeek(false)}>ปิด</button>
         </div>
@@ -143,24 +281,53 @@ export default function Admins() {
       {showForm && (
         <div className="form-container">
           <h3>📝 กรอกข้อมูลการรักษา</h3>
-          <form>
+          <form onSubmit={handleSubmit}>
             <label>ชื่อผู้ป่วย</label>
-            <input type="text" value="นาย สมหมาย ใจดี" readOnly />
+            <input
+              type="text"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              readOnly={!!selectedAppointment} // ถ้ามาจาก appointment ให้ล็อกชื่อ (แต่ยังเปลี่ยนได้ถ้าต้องการลบ readOnly)
+            />
 
             <label>เพศ</label>
-            <input type="text" value="ชาย" readOnly />
+            <input
+              type="text"
+              value={formData.sex}
+              onChange={(e) => setFormData({ ...formData, sex: e.target.value })}
+              readOnly={!!selectedAppointment}
+            />
 
             <label>อายุ</label>
-            <input type="text" value="48" readOnly />
+            <input
+              type="number"
+              value={formData.age}
+              onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+              placeholder="กรอกอายุ"
+            />
 
             <label>การวินิจฉัยโรค</label>
-            <textarea placeholder="รายละเอียดการวินิจฉัย" />
+            <textarea
+              placeholder="รายละเอียดการวินิจฉัย"
+              value={formData.treat}
+              onChange={(e) => setFormData({ ...formData, treat: e.target.value })}
+            />
 
             <label>ยาที่จ่าย</label>
-            <input type="text" placeholder="กรอกชื่อยา" />
+            <input
+              type="text"
+              placeholder="กรอกชื่อยา"
+              value={formData.med}
+              onChange={(e) => setFormData({ ...formData, med: e.target.value })}
+            />
 
             <label>ค่ารักษา (บาท)</label>
-            <input type="number" placeholder="จำนวนเงิน" />
+            <input
+              type="number"
+              placeholder="จำนวนเงิน"
+              value={formData.price}
+              onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+            />
 
             <div className="form-buttons">
               <button type="submit" className="save-btn">บันทึก</button>
@@ -197,7 +364,6 @@ export default function Admins() {
           <button className="close-btn" onClick={() => setShowHistory(false)}>ปิด</button>
         </div>
       )}
-
     </div>
   );
 }

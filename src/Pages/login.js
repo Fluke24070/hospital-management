@@ -21,7 +21,12 @@ export default function Login() {
       });
 
       if (res.data.status === 200) {
+        // เก็บ user object เดิม
         localStorage.setItem("currentUser", JSON.stringify(res.data.user));
+
+        // trim ชื่อและนามสกุลก่อนเก็บ
+        const fullName = `${res.data.user.name.trim()} ${res.data.user.lastname.trim()}`;
+        localStorage.setItem("currentUserName", fullName);
 
         alert("เข้าสู่ระบบสำเร็จ");
         navigate("/", { replace: true });

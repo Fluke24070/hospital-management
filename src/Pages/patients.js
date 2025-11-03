@@ -1,43 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Styles/patient.css";
 
 export default function Patient() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("history");
+  const [medicalHistory, setMedicalHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const handleLogout = () => {
     localStorage.removeItem("currentUser");
+    localStorage.removeItem("currentUserName");
     navigate("/login");
   };
 
-  // ข้อมูลผู้ป่วย
-  const patient = { name: "นาย สมชาย ใจดี" };
+  const patientName = localStorage.getItem("currentUserName")?.trim();
 
-  // ตัวอย่างข้อมูล
-  const medicalHistory = [
-    { id: 1, date: "2025-10-28", doctor: "Dr. Somchai", diagnosis: "ไข้หวัดใหญ่", treatment: "ให้ยาแก้ไข้และพักผ่อน" },
-    { id: 2, date: "2025-09-15", doctor: "Dr. Thitiya", diagnosis: "ปวดท้อง", treatment: "ให้ยาแก้ปวดและตรวจเลือด" },
-  ];
+  useEffect(() => {
+    const fetchTreatData = async () => {
+      if (!patientName) return;
+      try {
+        setLoading(true);
+        const response = await fetch(
+          `http://localhost:5000/treatBYname?name=${encodeURIComponent(patientName)}`
+        );
+        const data = await response.json();
+        if (response.ok && Array.isArray(data.data)) {
+          setMedicalHistory(data.data);
+        } else {
+          setMedicalHistory([]);
+        }
+      } catch (err) {
+        console.error("Error fetching treat data:", err);
+        setMedicalHistory([]);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const [medicineReceipts, setMedicineReceipts] = useState([
-    { id: 1, date: "2025-10-28", medicine: "Paracetamol 500mg", quantity: 10, price: 50, paid: false },
-    { id: 2, date: "2025-10-28", medicine: "Vitamin C 1000mg", quantity: 5, price: 100, paid: true },
-  ]);
-
-  const paymentBills = [
-    { id: 1, date: "2025-10-28", description: "ค่ารักษา + ค่ายา", total: 250 },
-    { id: 2, date: "2025-09-15", description: "ค่าตรวจและยา", total: 480 },
-  ];
-
-  // ฟังก์ชันเปลี่ยนสถานะจ่ายเงิน
-  const togglePaidStatus = (id) => {
-    setMedicineReceipts(prev =>
-      prev.map(item =>
-        item.id === id ? { ...item, paid: !item.paid } : item
-      )
-    );
-  };
+    fetchTreatData();
+  }, [patientName]);
 
   return (
     <div className="patient-page">
@@ -54,12 +56,6 @@ export default function Patient() {
           🩺 ประวัติการรักษา
         </button>
         <button
-          className={activeTab === "receipt" ? "active-tab" : "tab-btn"}
-          onClick={() => setActiveTab("receipt")}
-        >
-          💊 ใบเสร็จจ่ายยา
-        </button>
-        <button
           className={activeTab === "bill" ? "active-tab" : "tab-btn"}
           onClick={() => setActiveTab("bill")}
         >
@@ -68,96 +64,47 @@ export default function Patient() {
       </div>
 
       <div className="patient-content">
-        {/* ประวัติการรักษา */}
-        {activeTab === "history" && (
-          <div className="content-box">
-            <h2>🩺 ประวัติการรักษา</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>วันที่</th>
-                  <th>แพทย์ผู้รักษา</th>
+        {loading ? (
+          <p>กำลังโหลดข้อมูล...</p>
+        ) : medicalHistory.length === 0 ? (
+          <p>ยังไม่มีข้อมูลการรักษา</p>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>ชื่อผู้ป่วย</th>
+                {activeTab === "history" && <>
+                  <th>เพศ</th>
+                  <th>อายุ</th>
                   <th>การวินิจฉัย</th>
-                  <th>การรักษา</th>
-                </tr>
-              </thead>
-              <tbody>
-                {medicalHistory.map(item => (
-                  <tr key={item.id}>
-                    <td>{item.date}</td>
-                    <td>{item.doctor}</td>
-                    <td>{item.diagnosis}</td>
-                    <td>{item.treatment}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-
-            {/* แสดงชื่อผู้ป่วย */}
-            <div className="patient-name">
-              <strong>ชื่อผู้ป่วย:</strong> {patient.name}
-            </div>
-          </div>
-        )}
-
-        {/* ใบเสร็จจ่ายยา */}
-        {activeTab === "receipt" && (
-          <div className="content-box">
-            <h2>💊 ใบเสร็จจ่ายยา</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>วันที่</th>
-                  <th>ชื่อยา</th>
-                  <th>จำนวน</th>
-                  <th>ราคา (บาท)</th>
-                  <th>สถานะการจ่ายเงิน</th>
-                </tr>
-              </thead>
-              <tbody>
-                {medicineReceipts.map(item => (
-                  <tr key={item.id}>
-                    <td>{item.date}</td>
-                    <td>{item.medicine}</td>
-                    <td>{item.quantity}</td>
+                </>}
+                {activeTab === "bill" && <>
+                  <th>ยาที่จ่าย</th>
+                  <th>ค่ารักษา</th>
+                </>}
+              </tr>
+            </thead>
+            <tbody>
+              {medicalHistory.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.name.trim()}</td>
+                  {activeTab === "history" && <>
+                    <td>{item.sex.trim()}</td>
+                    <td>{item.age}</td>
+                    <td>{item.treat}</td>
+                  </>}
+                  {activeTab === "bill" && <>
+                    <td>{item.med}</td>
                     <td>{item.price}</td>
-                    <td>
-                      {item.paid ? "จ่ายแล้ว ✅" : "ยังไม่จ่าย ❌"}{" "}
-                      <button onClick={() => togglePaidStatus(item.id)}>
-                        เปลี่ยนสถานะ
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-
-        {/* บิลจ่ายเงิน */}
-        {activeTab === "bill" && (
-          <div className="content-box">
-            <h2>💵 บิลจ่ายเงิน</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>วันที่</th>
-                  <th>รายละเอียด</th>
-                  <th>ยอดรวม (บาท)</th>
+                  </>}
                 </tr>
-              </thead>
-              <tbody>
-                {paymentBills.map(item => (
-                  <tr key={item.id}>
-                    <td>{item.date}</td>
-                    <td>{item.description}</td>
-                    <td>{item.total}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         )}
+        <div className="patient-name">
+              <strong>ชื่อผู้ป่วย:</strong> {patientName}
+            </div>
       </div>
     </div>
   );
