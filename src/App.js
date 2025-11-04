@@ -15,6 +15,7 @@ import Reset from "./Pages/reset";
 import Admin from "./Pages/admins";
 import Patient from "./Pages/patients";
 
+
 function App() {
   return (
     <div className="App">
@@ -25,7 +26,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/legal" element={<Legal />} />
           <Route path="/appointment" element={<Appointment />} />
-
+          <Route path="/Home" element={<Home/>} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/reset" element={<Reset />} />

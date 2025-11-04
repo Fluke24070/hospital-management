@@ -11,35 +11,49 @@ export default function Login() {
   const [message, setMessage] = useState("");
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    setMessage("");
+  e.preventDefault();
+  setMessage("");
 
-    try {
-      const res = await axios.post("http://localhost:5000/login", {
-        identityID,
-        password,
-      });
+  try {
+    const res = await axios.post("http://localhost:5000/login", {
+      identityID,
+      password,
+    });
 
-      if (res.data.status === 200) {
-        // เก็บ user object เดิม
-        localStorage.setItem("currentUser", JSON.stringify(res.data.user));
+    if (res.data.status === 200) {
+      const user = res.data.user;
 
-        // trim ชื่อและนามสกุลก่อนเก็บ
-        const fullName = `${res.data.user.name.trim()} ${res.data.user.lastname.trim()}`;
-        localStorage.setItem("currentUserName", fullName);
+      // เก็บข้อมูล user ลง localStorage
+      localStorage.setItem("currentUser", JSON.stringify(user));
 
-        alert("เข้าสู่ระบบสำเร็จ");
-        navigate("/", { replace: true });
+      // เก็บชื่อเต็ม (trim ชื่อ-นามสกุล)
+      const fullName = `${user.name?.trim() || ""} ${user.lastname?.trim() || ""}`;
+      localStorage.setItem("currentUserName", fullName);
+
+      // 🔥 trim ช่องว่างจาก status ก่อนใช้งาน
+      const userRole = user.status?.trim().toLowerCase();
+
+      console.log("🧭 User role:", userRole);
+
+      // ✅ ตรวจสอบ role แล้วเปลี่ยนหน้า
+      if (userRole === "doctor") {
+        navigate("/admins", { replace: true });
+      } else if (userRole === "patient") {
+        navigate("/Home", { replace: true });
       } else {
-        setMessage(res.data.message || "เข้าสู่ระบบไม่สำเร็จ");
+        setMessage("ไม่พบสิทธิ์ผู้ใช้งาน (role)");
       }
-    } catch (err) {
-      console.error(err);
-      setMessage(
-        err.response?.data?.message || "เกิดข้อผิดพลาดในการเข้าสู่ระบบ"
-      );
+    } else {
+      setMessage(res.data.message || "เข้าสู่ระบบไม่สำเร็จ");
     }
-  };
+  } catch (err) {
+    console.error("Login error:", err.response || err);
+    setMessage(
+      err.response?.data?.message || "เกิดข้อผิดพลาดในการเข้าสู่ระบบ"
+    );
+  }
+};
+
 
   return (
     <div className="login-page">

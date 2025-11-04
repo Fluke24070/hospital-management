@@ -22,7 +22,7 @@ export default function Admins() {
     { id: 2, date: "2025-09-15", disease: "ปวดหัว", medicine: "ไอบูโพรเฟน", cost: 250 },
   ]);
 
-  const doctor = { id: 1, name: "นพ. สมชาย ใจดี", photo: "" };
+  const doctor = { id: 1, name: "", photo: "" };
 
   // form data for treatment
   const [formData, setFormData] = useState({
@@ -231,7 +231,7 @@ export default function Admins() {
                     <td>{a.time}</td>
                     <td>
                       <button className="add-btn" onClick={() => openFormForAppointment(a)}>กรอกประวัติ</button>
-                      <button className="view-btn" onClick={() => { setSelectedAppointment(a); setShowHistory(true); setShowForm(false); }}>ดูประวัติ</button>
+      
                     </td>
                   </tr>
                 ))

@@ -36,9 +36,6 @@ export default function Navbar() {
           <a href="#about" className="navbar-link">เกี่ยวกับเรา</a>
         </li>
         <li>
-          <a href="#reviews" className="navbar-link">รีวิว</a>
-        </li>
-        <li>
           <a href="#doctors" className="navbar-link">แพทย์</a>
         </li>
       </ul>
